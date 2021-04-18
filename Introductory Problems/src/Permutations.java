@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class WeirdProblem {
+class Permutations {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
@@ -9,21 +9,26 @@ class WeirdProblem {
     final int mod = 1000000007;
 
     /**
-     *
+     *  1 3 5 7 9 2 4 6 8
+     *  1 3 2
+     *  4: 2 4 1 3
+     *  so we cant find a beautiful permutation for 1<n<=4
+     *  5: 1 3 5 2 4
      */
 
     void solve() throws Exception {
         read();
-        long n= ni();
-        while(n!= 1) {
-            out.print(n+" ");
-            n= (n&1)== 0? n/2: n*3+1;
+        int n= ni();
+        if(n<=3 && n!= 1) out.println("NO SOLUTION");
+        else {
+            for(int i= 2;i<=n;i+=2) out.print(i+" ");
+            for(int i= 1;i<=n;i+=2) out.print(i+" ");
+            out.println();
         }
-        out.println(1);
     }
 
     public static void main(String[] args) throws Exception {
-        new WeirdProblem().run();
+        new Permutations().run();
     }
 
     void run() throws Exception {

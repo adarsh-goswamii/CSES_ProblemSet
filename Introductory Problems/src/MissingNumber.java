@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class WeirdProblem {
+class MissingNumber {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
@@ -14,16 +14,20 @@ class WeirdProblem {
 
     void solve() throws Exception {
         read();
-        long n= ni();
-        while(n!= 1) {
-            out.print(n+" ");
-            n= (n&1)== 0? n/2: n*3+1;
+        int n= ni();
+
+        int ans= 1;
+        read();
+        for(int i=2;i<=n;i++) {
+            ans^= i;
+            ans^= ni();
         }
-        out.println(1);
+
+        out.println(ans);
     }
 
     public static void main(String[] args) throws Exception {
-        new WeirdProblem().run();
+        new MissingNumber().run();
     }
 
     void run() throws Exception {

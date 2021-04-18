@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class WeirdProblem {
+class NumberSpiral {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
@@ -9,21 +9,44 @@ class WeirdProblem {
     final int mod = 1000000007;
 
     /**
+     *    1  2  3  4  5
+     * 1  1  2  9 10 25
+     * 2  4  3  8 11 24
+     * 3  5  6  7 12 23
+     * 4 16 15 14 13 22
+     * 5 17 18 19 20 21
      *
      */
 
     void solve() throws Exception {
         read();
-        long n= ni();
-        while(n!= 1) {
-            out.print(n+" ");
-            n= (n&1)== 0? n/2: n*3+1;
+        int t= ni();
+        for(int ii= 0;ii<t;ii++) {
+            read();
+            int n= ni(), m= ni();
+
+            long rstart, cstart;
+            if(n%2== 0) rstart= n*1l*n;
+            else rstart= (n-1)*1l*(n-1)+1;
+
+            if(m%2== 1) cstart= m*1l*m;
+            else cstart= (m-1)*1l*(m-1)+1;
+
+//            out.println(rstart+" "+cstart);
+
+            if(rstart> cstart) {
+                int mul= n%2== 0? -1: 1;
+                out.println(rstart+ mul*--m);
+            }
+            else {
+                int mul= m%2== 0? 1: -1;
+                out.println(cstart+ mul*--n);
+            }
         }
-        out.println(1);
     }
 
     public static void main(String[] args) throws Exception {
-        new WeirdProblem().run();
+        new NumberSpiral().run();
     }
 
     void run() throws Exception {

@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class WeirdProblem {
+class Repetitions {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
@@ -13,17 +13,25 @@ class WeirdProblem {
      */
 
     void solve() throws Exception {
-        read();
-        long n= ni();
-        while(n!= 1) {
-            out.print(n+" ");
-            n= (n&1)== 0? n/2: n*3+1;
+        char[] arr= ns().toCharArray();
+
+        int ans= 0, counter= 0;
+        char prev= arr[0];
+        for(char c: arr) {
+            if(c== prev) counter++;
+            else {
+                counter= 1;
+                prev= c;
+            }
+
+            ans= Math.max(ans, counter);
         }
-        out.println(1);
+
+        out.println(ans);
     }
 
     public static void main(String[] args) throws Exception {
-        new WeirdProblem().run();
+        new Repetitions().run();
     }
 
     void run() throws Exception {
