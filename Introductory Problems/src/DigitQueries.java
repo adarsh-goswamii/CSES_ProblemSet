@@ -1,14 +1,12 @@
 import java.util.*;
 import java.io.*;
 
-class TowerOfHanoi {
+class DigitQueries {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
     final int imax = Integer.MAX_VALUE, imin = Integer.MIN_VALUE;
     final int mod = 1000000007;
-    long count;
-    StringBuilder ans;
 
     /**
      *
@@ -16,31 +14,32 @@ class TowerOfHanoi {
 
     void solve() throws Exception {
         read();
-        int n= ni();
+        int q= ni();
 
-        count= 0l;
-        ans= new StringBuilder();
-        towerOfHanoi(n, 1, 3, 2);
-        out.println(count);
-        out.print(ans);
-    }
+        for(int i=0;i<q;i++) {
+            read();
+            long k= nl();
 
-    void towerOfHanoi(int n, int from_rod, int to_rod, int aux_rod)
-    {
-        if (n == 1)
-        {
-            ans.append(from_rod+" "+to_rod+"\n");
-            count++;
-            return;
+            long start= 0, last= 9, len= 1;
+            while(true) {
+                long val= (last- start+1)* len;
+                if(val>= k) {
+                    long ans= start+ k/len;
+                    out.println((""+ans).charAt((int)(k%len)));
+                    break;
+                }
+
+                k-= (last- start+1)* len;
+                len++;
+                start= start== 0? 10: start*10;
+                last= last*10+ 9;
+            }
         }
-        towerOfHanoi(n - 1, from_rod, aux_rod, to_rod);
-        ans.append(from_rod +" "+to_rod+"\n");
-        count++;
-        towerOfHanoi(n - 1, aux_rod, to_rod, from_rod);
+
     }
 
     public static void main(String[] args) throws Exception {
-        new TowerOfHanoi().run();
+        new DigitQueries().run();
     }
 
     void run() throws Exception {

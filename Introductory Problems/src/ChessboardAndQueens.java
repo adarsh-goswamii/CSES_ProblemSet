@@ -1,46 +1,53 @@
 import java.util.*;
 import java.io.*;
 
-class TowerOfHanoi {
+class ChessboardAndQueens {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
     final int imax = Integer.MAX_VALUE, imin = Integer.MIN_VALUE;
     final int mod = 1000000007;
-    long count;
-    StringBuilder ans;
 
     /**
      *
      */
 
     void solve() throws Exception {
-        read();
-        int n= ni();
+        char[][] board= {ns().toCharArray(), ns().toCharArray(), ns().toCharArray(), ns().toCharArray(), ns().toCharArray(),
+                ns().toCharArray(), ns().toCharArray(), ns().toCharArray()};
 
-        count= 0l;
-        ans= new StringBuilder();
-        towerOfHanoi(n, 1, 3, 2);
-        out.println(count);
-        out.print(ans);
+        ans= 0;
+        backtracking(board, new boolean[8], new boolean[15], new boolean[15], 0);
+        out.println(ans);
     }
 
-    void towerOfHanoi(int n, int from_rod, int to_rod, int aux_rod)
-    {
-        if (n == 1)
-        {
-            ans.append(from_rod+" "+to_rod+"\n");
-            count++;
-            return;
+    int ans;
+    private void backtracking(char[][] board, boolean[] col, boolean[] top_left_bottom_right, boolean[] top_right_bottom_left, int curr) {
+        if(curr== 8) ans++;
+        else {
+            for(int i=0;i<8;i++) {
+                if(board[curr][i]== '*') continue;
+                else if(col[i]) continue;
+
+                int d1= curr-i+7;
+                int d2= 7-curr-i+7;
+
+                if(top_left_bottom_right[d1] || top_right_bottom_left[d2]) continue;
+
+                col[i]= true;
+                top_left_bottom_right[d1]= true;
+                top_right_bottom_left[d2]= true;
+                backtracking(board, col, top_left_bottom_right, top_right_bottom_left, curr+1);
+
+                col[i]= false;
+                top_left_bottom_right[d1]= false;
+                top_right_bottom_left[d2]= false;
+            }
         }
-        towerOfHanoi(n - 1, from_rod, aux_rod, to_rod);
-        ans.append(from_rod +" "+to_rod+"\n");
-        count++;
-        towerOfHanoi(n - 1, aux_rod, to_rod, from_rod);
     }
 
     public static void main(String[] args) throws Exception {
-        new TowerOfHanoi().run();
+        new ChessboardAndQueens().run();
     }
 
     void run() throws Exception {
