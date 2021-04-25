@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CSES_ProblemSet.iml" filepath="$PROJECT_DIR$/CSES_ProblemSet.iml" />
       <module fileurl="file://$PROJECT_DIR$/Introductory Problems/Introductory Problems.iml" filepath="$PROJECT_DIR$/Introductory Problems/Introductory Problems.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SortingAndSearching/SortingAndSearching.iml" filepath="$PROJECT_DIR$/SortingAndSearching/SortingAndSearching.iml" />
     </modules>
   </component>
 </project>

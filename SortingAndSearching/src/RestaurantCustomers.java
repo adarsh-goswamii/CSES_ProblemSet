@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class GridPaths {
+class RestaurantCustomers {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
@@ -9,47 +9,35 @@ class GridPaths {
     final int mod = 1000000007;
 
     /**
-     *  TODO: 24th April 2021
+     *
      */
 
     void solve() throws Exception {
-        char[] r= ns().toCharArray();
-        ans= 0;
-        dp= new int[7][7][48];
-        for(int[][] i: dp) for(int[] j: i) Arrays.fill(j, -1);
-        out.println(dfs(r, new boolean[7][7], 0, 0, 0));
-    }
+        read();
+        int n= ni();
+        PriorityQueue<Integer> a= new PriorityQueue<>();
+        PriorityQueue<Integer> b= new PriorityQueue<>();
 
-    int ans= 0;
-    int[][][] dp;
-    private int dfs(char[] r, boolean[][] v, int i, int j, int k) {
-        if(k>= 46)System.out.println(i+" "+j+" "+k);
-        if(i<0 || j< 0 || i> 6 || j>6) return 0;
-        else if(v[i][j]) return 0;
-        else if(k== r.length && i== 6 && j== 0) return 1;
-        else if(k== r.length) return 0;
-//        else if(dp[i][j][k]!= -1) return dp[i][j][k];
-        else {
-            v[i][j]= true;
-            int val= 0;
-            if(r[k]== 'U') val= dfs(r, v, i-1, j, k+1);
-            else if(r[k]== 'D') val= dfs(r, v, i+1, j, k+1);
-            else if(r[k]== 'L') val= dfs(r, v, i, j-1, k+1);
-            else if(r[k]== 'R') val= dfs(r, v, i, j+1, k+1);
-            else {
-                val+= dfs(r, v, i-1, j, k+1);
-                val+= dfs(r, v, i+1, j, k+1);
-                val+= dfs(r, v, i, j-1, k+1);
-                val+= dfs(r, v, i, j+1, k+1);
-            }
-            v[i][j]= false;
-            dp[i][j][k]= val;
-            return val;
+        for(int i=0;i<n;i++) {
+            read();
+            a.add(ni());
+            b.add(ni());
         }
+
+        int max= 0, count= 0;
+        while(!a.isEmpty()) {
+            int c= a.poll();
+            count++;
+
+            while(b.peek()< c) { count--; b.poll(); }
+            max= Math.max(max, count);
+        }
+
+        out.println(max);
     }
 
     public static void main(String[] args) throws Exception {
-        new GridPaths().run();
+        new RestaurantCustomers().run();
     }
 
     void run() throws Exception {

@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class GridPaths {
+class MovieFestival {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
@@ -9,47 +9,52 @@ class GridPaths {
     final int mod = 1000000007;
 
     /**
-     *  TODO: 24th April 2021
+     *
      */
 
     void solve() throws Exception {
-        char[] r= ns().toCharArray();
-        ans= 0;
-        dp= new int[7][7][48];
-        for(int[][] i: dp) for(int[] j: i) Arrays.fill(j, -1);
-        out.println(dfs(r, new boolean[7][7], 0, 0, 0));
+        read();
+        int n= ni();
+        List<int[]> a= new ArrayList<>();
+        for(int i=0;i<n;i++) {
+            read();
+            a.add(new int[]{ni(), ni()});
+        }
+
+        Collections.sort(a, (_a, _b)->(_a[0]-_b[0]));
+        dp= new int[n];
+        out.println(helper(a, 0));
     }
 
-    int ans= 0;
-    int[][][] dp;
-    private int dfs(char[] r, boolean[][] v, int i, int j, int k) {
-        if(k>= 46)System.out.println(i+" "+j+" "+k);
-        if(i<0 || j< 0 || i> 6 || j>6) return 0;
-        else if(v[i][j]) return 0;
-        else if(k== r.length && i== 6 && j== 0) return 1;
-        else if(k== r.length) return 0;
-//        else if(dp[i][j][k]!= -1) return dp[i][j][k];
+    int[] dp;
+    private int helper(List<int[]> a, int index) {
+        if(index>=a.size()) return 0;
+        else if(dp[index]!= 0) return dp[index];
         else {
-            v[i][j]= true;
-            int val= 0;
-            if(r[k]== 'U') val= dfs(r, v, i-1, j, k+1);
-            else if(r[k]== 'D') val= dfs(r, v, i+1, j, k+1);
-            else if(r[k]== 'L') val= dfs(r, v, i, j-1, k+1);
-            else if(r[k]== 'R') val= dfs(r, v, i, j+1, k+1);
-            else {
-                val+= dfs(r, v, i-1, j, k+1);
-                val+= dfs(r, v, i+1, j, k+1);
-                val+= dfs(r, v, i, j-1, k+1);
-                val+= dfs(r, v, i, j+1, k+1);
-            }
-            v[i][j]= false;
-            dp[i][j][k]= val;
-            return val;
+            int new_index= binarySearch(a, 0, a.size()-1, a.get(index)[1]);
+            dp[index]= Math.max(helper(a, new_index)+1, helper(a, index+1));
+
+            return dp[index];
         }
     }
 
+    private int binarySearch(List<int[]> a, int start, int last, int find) {
+        int ret= a.size();
+        while(start<= last) {
+            int mid= start+ (last- start)/2;
+
+            if(a.get(mid)[0]>= find) {
+                ret= mid;
+                last= mid-1;
+            }
+            else start= mid+1;
+        }
+
+        return ret;
+    }
+
     public static void main(String[] args) throws Exception {
-        new GridPaths().run();
+        new MovieFestival().run();
     }
 
     void run() throws Exception {
