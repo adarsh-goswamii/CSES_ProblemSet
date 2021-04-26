@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class MovieFestival {
+class Solution {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
@@ -13,28 +13,11 @@ class MovieFestival {
      */
 
     void solve() throws Exception {
-        read();
-        int n= ni();
-        List<int[]> a= new ArrayList<>();
-        for(int i=0;i<n;i++) {
-            read();
-            a.add(new int[]{ni(), ni()});
-        }
 
-        Collections.sort(a, (_a, _b)->(_a[1]-_b[1]));
-        int ans= 0, time= 0;
-        for(int[] i: a) {
-            if(i[0]>= time) {
-                ans++;
-                time= i[1];
-            }
-        }
-
-        out.println(ans);
     }
 
     public static void main(String[] args) throws Exception {
-        new MovieFestival().run();
+        new Solution().run();
     }
 
     void run() throws Exception {
