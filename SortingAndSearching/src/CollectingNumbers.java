@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class StickLengths {
+class CollectingNumbers {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
@@ -9,36 +9,42 @@ class StickLengths {
     final int mod = 1000000007;
 
     /**
-     * Can't believe the answer is the median of the array.
-     * I am so stupid
+     *
      */
 
     void solve() throws Exception {
         read();
-        int n= ni(), sum= 0;
+        int n = ni();
 
-        read();
-        List<Integer> a= new ArrayList<>();
-        for(int i=0;i<n;i++) a.add(ni());
+        int[] arr= new int[n]; read();
+        for(int i=0;i<n;i++) arr[i]= ni();
 
-        Collections.sort(a);
-        long h= a.get(n/2);
+        int max= 0;
+        TreeSet<Integer> set= new TreeSet<>();
+        for(int i: arr) {
+            if(set.lower(i)== null) set.add(i);
+            else {
+                int key= set.lower(i);
+                set.remove(key);
+                set.add(i);
+            }
 
-        long ans= 0;
-        for(int i: a)
-            ans+= Math.abs(h- i);
-        out.println(ans);
+            max= Math.max(max, set.size());
+        }
+
+        out.println(set.size());
+        out.println(max);
     }
 
     public static void main(String[] args) throws Exception {
-        new StickLengths().run();
+        new CollectingNumbers().run();
     }
 
     void run() throws Exception {
-        out = new PrintWriter(System.out);
-        br = new BufferedReader(new InputStreamReader(System.in));
+//        out = new PrintWriter(System.out);
+//        br = new BufferedReader(new InputStreamReader(System.in));
 
-        File file= new File("C:\\Users\\Adarsh Goswami\\Downloads\\test_input (4).txt");
+        File file= new File("C:\\Users\\Adarsh Goswami\\Downloads\\test_input (2).txt");
         br = new BufferedReader(new FileReader(file));
         out= new PrintWriter("output.txt");
 

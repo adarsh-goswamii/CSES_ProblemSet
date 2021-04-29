@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class StickLengths {
+class Playlist {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
@@ -9,38 +9,38 @@ class StickLengths {
     final int mod = 1000000007;
 
     /**
-     * Can't believe the answer is the median of the array.
-     * I am so stupid
+     *
      */
 
     void solve() throws Exception {
         read();
-        int n= ni(), sum= 0;
+        int n= ni();
+        int[] arr= new int[n]; read();
+        for(int i=0;i<n;i++) arr[i]= ni();
 
-        read();
-        List<Integer> a= new ArrayList<>();
-        for(int i=0;i<n;i++) a.add(ni());
+        Map<Integer, Integer> map= new HashMap<>();
+        int start= 0, max= 0;
+        for(int i=0;i<n;i++) {
+            if(map.containsKey(arr[i])) {
+                for(;start< map.get(arr[i]);start++) map.remove(arr[start]);
+                map.put(arr[i], i);
+                start++;
+            }
+            else map.put(arr[i], i);
 
-        Collections.sort(a);
-        long h= a.get(n/2);
+            max= Math.max(max, map.size());
+        }
 
-        long ans= 0;
-        for(int i: a)
-            ans+= Math.abs(h- i);
-        out.println(ans);
+        out.println(max);
     }
 
     public static void main(String[] args) throws Exception {
-        new StickLengths().run();
+        new Playlist().run();
     }
 
     void run() throws Exception {
         out = new PrintWriter(System.out);
         br = new BufferedReader(new InputStreamReader(System.in));
-
-        File file= new File("C:\\Users\\Adarsh Goswami\\Downloads\\test_input (4).txt");
-        br = new BufferedReader(new FileReader(file));
-        out= new PrintWriter("output.txt");
 
         solve();
         out.flush();
