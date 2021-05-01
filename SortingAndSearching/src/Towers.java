@@ -1,45 +1,50 @@
 import java.util.*;
 import java.io.*;
 
-class CollectingNumbers {
+class Towers {
     PrintWriter out;
     StringTokenizer st;
     BufferedReader br;
     final int imax = Integer.MAX_VALUE, imin = Integer.MIN_VALUE;
     final int mod = 1000000007;
 
-    /**
-     *
-     */
-
     void solve() throws Exception {
         read();
-        int n = ni();
+        int n=ni();
 
-        int[] arr= new int[n+1]; read();
-        for(int i=1;i<=n;i++) arr[ni()]= i;
+        int[] arr= new int[n]; read();
+        for(int i=0;i<n;i++) arr[i]= ni();
 
-        int prev= n+2, ans= 0;
-        for(int i=1;i<=n;i++) {
-            if(arr[i]> prev) prev= arr[i];
+        TreeMap<Integer, Integer> map= new TreeMap<>();
+        for(int i: arr) {
+            if(map.higherKey(i)== null) {
+                map.put(i, map.getOrDefault(i, 0)+1);
+            }
             else {
-                ans++;
-                prev= arr[i];
+                int key= map.higherKey(i);
+                map.put(key, map.get(key)-1);
+                if(map.get(key)== 0) map.remove(key);
+
+                map.put(i, map.getOrDefault(i, 0)+1);
             }
         }
+
+        int ans= 0;
+        for(Map.Entry<Integer, Integer> i: map.entrySet())
+            ans+= i.getValue();
 
         out.println(ans);
     }
 
     public static void main(String[] args) throws Exception {
-        new CollectingNumbers().run();
+        new Towers().run();
     }
 
     void run() throws Exception {
         out = new PrintWriter(System.out);
         br = new BufferedReader(new InputStreamReader(System.in));
 
-//        File file= new File("C:\\Users\\Adarsh Goswami\\Downloads\\test_input (2).txt");
+//        File file= new File("C:\\Users\\Adarsh Goswami\\Downloads\\test_input (4).txt");
 //        br = new BufferedReader(new FileReader(file));
 //        out= new PrintWriter("output.txt");
 
@@ -100,7 +105,7 @@ class CollectingNumbers {
         if (a + b >= mod)
             return (a + b) - mod;
         else
-            return a + b;
+            return a + b >= 0 ? a + b : a + b + mod;
     }
 
     long mul(long a, long b) {

@@ -13,7 +13,22 @@ class Solution {
      */
 
     void solve() throws Exception {
+        read();
+        int n= ni();
 
+        long sum= 0; read();
+        for(int i=0;i<n;i++) {
+            sum= add(sum, ni());
+        }
+
+        read();
+        int q= ni();
+        read();
+        for(int i=0;i<q;i++) {
+            int val= ni();
+            sum= add(sum, sum);
+            out.println(sum);
+        }
     }
 
     public static void main(String[] args) throws Exception {
@@ -23,6 +38,10 @@ class Solution {
     void run() throws Exception {
         out = new PrintWriter(System.out);
         br = new BufferedReader(new InputStreamReader(System.in));
+
+//        File file= new File("C:\\Users\\Adarsh Goswami\\Downloads\\test_input (4).txt");
+//        br = new BufferedReader(new FileReader(file));
+//        out= new PrintWriter("output.txt");
 
         solve();
         out.flush();
@@ -81,7 +100,7 @@ class Solution {
         if (a + b >= mod)
             return (a + b) - mod;
         else
-            return a + b;
+            return a + b >= 0 ? a + b : a + b + mod;
     }
 
     long mul(long a, long b) {
